@@ -2,10 +2,20 @@
   "name": "shortlinker",
   "version": "1.0.0",
   "description": "A CLI utility to turn your website into a link shortener for your URLs",
-  "main": "index.js",
+  "main": "./index.js",
   "author": "Felix Wu",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flxwu/shortlinker.git"
+  },
+  "bin": {
+    "shortlinker": "./bin/shortlinker.js"
+  },
   "scripts": {
-    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+    "patch-release": "yarn version --patch && yarn publish && git push --follow-tags"
+  },
+  "dependencies": {
+    "shelljs": "^0.8.2"
   }
 }
