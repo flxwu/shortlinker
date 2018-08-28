@@ -2,7 +2,6 @@
   "name": "shortlinker",
   "version": "1.2.1",
   "description": "A CLI utility to turn your website into a link shortener for your URLs",
-  "main": "./index.js",
   "author": "Felix Wu",
   "license": "MIT",
   "repository": {
