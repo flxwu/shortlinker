@@ -41,6 +41,7 @@ commander
 		file.write(
 			templatePage(url)
 		);
+		log(chalk.blue(`Successfully created shortlink under ${path}.html pointing to ${url}`))
 	});
 
 commander.parse(process.argv);
