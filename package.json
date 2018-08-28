@@ -16,6 +16,7 @@
     "patch-release": "yarn version --patch && yarn publish && git push --follow-tags"
   },
   "dependencies": {
-    "shelljs": "^0.8.2"
+    "chalk": "^2.4.1",
+    "commander": "^2.17.1"
   }
 }
