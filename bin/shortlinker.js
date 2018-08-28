@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 const commander = require('commander');
+const shelljs = require('shelljs');
 const chalk = require('chalk');
 const fs = require('fs');
 const templatePage = require('./template');
@@ -16,6 +17,7 @@ commander
 		'-D, --dir <directoryPath>',
 		'website directory to create the shortlink in'
 	)
+	.option('-G, --git [Commit Message]', 'Commit and Push to Version Control')
 	.action((url, shortenedUrlTitle, options) => {
 		const isValidUrl = urlRegex.test(url);
 		if (!isValidUrl) {
@@ -29,7 +31,15 @@ commander
 
 		let path = '';
 		if (options.dir) {
-			path += options.dir;
+			path +=
+				options.dir.charAt(options.dir.length - 1) === '/'
+					? options.dir
+					: options.dir + '/';
+			try {
+				fs.mkdirSync(path)
+			} catch (err) {
+				if (err.code !== 'EEXIST') log(chalk.red(err));
+			}
 		}
 		if (shortenedUrlTitle) {
 			path += shortenedUrlTitle;
@@ -38,10 +48,20 @@ commander
 		}
 
 		const file = fs.createWriteStream(`${path}.html`);
-		file.write(
-			templatePage(url)
+		file.write(templatePage(url));
+		log(
+			chalk.blue(
+				`Successfully created shortlink under ${path}.html pointing to ${url}`
+			)
 		);
-		log(chalk.blue(`Successfully created shortlink under ${path}.html pointing to ${url}`))
+
+		if (options.git) {
+			const commitMessage =
+				`Add ${url} shortlink via https://github.com/flxwu/shortlinker` ||
+				options.git;
+			console.log(options.git);
+			// shelljs.exec(`git commit ${path} -m '${commitMessage}'`)
+		}
 	});
 
 commander.parse(process.argv);
