@@ -18,6 +18,7 @@ commander
 		'website directory to create the shortlink in'
 	)
 	.option('-G, --git [Commit Message]', 'Commit and Push to Version Control')
+	.option('-GC, --gitcommit [Commit Message]', 'Only Commit to Version Control')
 	.action((url, shortenedUrlTitle, options) => {
 		const isValidUrl = urlRegex.test(url);
 		if (!isValidUrl) {
@@ -36,7 +37,7 @@ commander
 					? options.dir
 					: options.dir + '/';
 			try {
-				fs.mkdirSync(path)
+				fs.mkdirSync(path);
 			} catch (err) {
 				if (err.code !== 'EEXIST') log(chalk.red(err));
 			}
@@ -57,10 +58,13 @@ commander
 
 		if (options.git) {
 			const commitMessage =
-				`Add ${url} shortlink via https://github.com/flxwu/shortlinker` ||
-				options.git;
-			console.log(options.git);
-			// shelljs.exec(`git commit ${path} -m '${commitMessage}'`)
+				options.git === true
+					? `Add ${url} shortlink via https://github.com/flxwu/shortlinker`
+					: options.git;
+			shelljs.exec(`git add ${path}.html && git commit ${path}.html -m '${commitMessage}'`);
+			if (!options.gitcommit) {
+				shelljs.exec(`git push`);				
+			}
 		}
 	});
 
