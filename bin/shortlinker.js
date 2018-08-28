@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 const commander = require('commander');
-const shelljs = require('shelljs');
+const { exec } = require('child_process');
 const chalk = require('chalk');
 const fs = require('fs');
 const templatePage = require('./template');
@@ -61,9 +61,9 @@ commander
 				options.git === true
 					? `Add ${url} shortlink via https://github.com/flxwu/shortlinker`
 					: options.git;
-			shelljs.exec(`git add ${path}.html && git commit ${path}.html -m '${commitMessage}'`);
+			exec(`git add ${path}.html && git commit ${path}.html -m '${commitMessage}'`);
 			if (!options.gitcommit) {
-				shelljs.exec(`git push`);				
+				exec(`git push`);				
 			}
 		}
 	});
