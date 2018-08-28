@@ -1,6 +1,6 @@
 {
   "name": "shortlinker",
-  "version": "1.2.1",
+  "version": "1.3.1",
   "description": "A CLI utility to turn your website into a link shortener for your URLs",
   "author": "Felix Wu",
   "license": "MIT",
@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "chalk": "^2.4.1",
-    "commander": "^2.17.1",
-    "shelljs": "^0.8.2"
+    "commander": "^2.17.1"
   }
 }
